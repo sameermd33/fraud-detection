@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Federated Learning for Credit Card Fraud Detection</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1e1e1e; /* Dark background for a modern look */
+            color: #e0e0e0; /* Light text color for contrast */
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #004d40; /* Darker teal */
+            padding: 10px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        nav a {
+            color: #e0e0e0;
+            text-decoration: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            transition: background 0.3s ease;
+        }
+        nav a:hover {
+            background-color: #00796b; /* Radium green */
+            border-radius: 5px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #333; /* Dark background for content */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        section {
+            margin-bottom: 40px;
+            padding: 20px;
+        }
+        h2 {
+            color: #00e676; /* Light green */
+            border-bottom: 2px solid #00e676;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+        p {
+            line-height: 1.6;
+            font-size: 1.1em;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li {
+            background-color: #00796b; /* Radium green */
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 1.1em;
+        }
+        .code-block {
+            background-color: #292929; /* Dark code background */
+            color: #f8f8f2; /* Light code text */
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            border: 1px solid #444; /* Slight border to define the block */
+        }
+        .code-block code {
+            color: #66d9ef; /* Light blue */
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-button {
+            background-color: #004d40; /* Darker teal */
+            color: #e0e0e0;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s ease;
+        }
+        .dropdown-button:hover {
+            background-color: #00796b; /* Radium green */
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #004d40; /* Darker teal */
+            color: #e0e0e0;
+            min-width: 200px;
+            border-radius: 8px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            z-index: 1;
+            top: 100%;
+            left: 0;
+            padding: 10px;
+        }
+        .dropdown-content p {
+            margin: 5px 0;
+            padding: 8px 10px;
+            border-bottom: 1px solid #00796b; /* Radium green */
+        }
+        .dropdown-content p:last-child {
+            border-bottom: none;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="#current-work">Current Work</a>
+        <a href="#registered-peers">Registered Peers</a>
+        <a href="#api-request">API Request</a>
+    </nav>
+    <div class="container">
+        <section id="current-work">
+            <h2>Current Work: Federated Learning for Fraud Detection</h2>
+            <p>
+                Our system leverages federated learning to enhance credit card fraud detection. Federated learning is an innovative machine learning approach where multiple institutions collaboratively train a shared model without sharing their local data. Each participating bank trains their local model on their own data, and only the learned model parameters are shared with the central server. This approach aggregates the knowledge from all participating banks to create a more robust and accurate fraud detection system.
+            </p>
+            <p>
+                By keeping sensitive data localized and only sharing model updates, federated learning not only improves the prediction accuracy but also ensures that customer data remains secure and private. This distributed learning method helps in overcoming data silos and enhances the model's performance by incorporating diverse data sources while respecting privacy regulations.
+            </p>
+        </section>
+
+        <section id="registered-peers">
+            <h2>Registered Peers</h2>
+            <p>
+                The following banks are registered and have undergone the federated learning process:
+            </p>
+            <ul>
+                <li>HDFC Bank</li>
+                <li>ICICI Bank</li>
+                <li>SBI Bank</li>
+            </ul>
+            <p>Each bank's local model accuracy, achieved through the federated learning process, is as follows:</p>
+            <div class="dropdown">
+                <button class="dropdown-button">Bank Model Accuracy</button>
+                <div class="dropdown-content">
+                    <p><strong>HDFC Bank:</strong> 99.74%</p>
+                    <p><strong>ICICI Bank:</strong> 99.70%</p>
+                    <p><strong>SBI Bank:</strong> 99.63%</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="api-request">
+            <h2>How to Use the API Request</h2>
+            <p>
+                Each registered bank can make predictions by sending a POST request to our API. Below are examples of how to use `curl` to send a request. Replace `<password>` with the bank's password and adjust the feature values as needed.
+            </p>
+            <div class="code-block">
+                <pre><code>curl -X POST http://your-server-url/predict \
+    -H "Content-Type: application/json" \
+    -d '{"password": "<password>", "features": [0.186, 0.223, 0.336, 0.0, 1.0, 0.0, 1.0]}'</code></pre>
+            </div>
+            <p>
+                This `curl` command sends a JSON payload with the bank's password and feature values to the prediction endpoint. The response will include the prediction result, indicating whether the transaction is classified as fraud or not.
+            </p>
+        </section>
+    </div>
+</body>
+</html>
