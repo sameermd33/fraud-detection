@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Federated Fraud Detection</title>
+    <title>Service - Federated Fraud Detection</title>
     <style>
         body {
             margin: 0;
             padding: 0;
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(120deg, #2c3e50, #16a085);
-            overflow-x: hidden;
             color: #ffffff;
         }
         header {
@@ -61,90 +60,49 @@
         nav ul li a:hover {
             color: #1abc9c;
         }
-        .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            background: linear-gradient(to bottom right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4)), url('https://source.unsplash.com/1600x900/?cybersecurity') no-repeat center/cover;
-            color: #ffffff;
-        }
-        .hero h1 {
-            font-size: 4em;
-            margin: 0;
-            text-transform: uppercase;
-            animation: fadeIn 1.5s ease-in-out;
-        }
-        .hero p {
-            font-size: 1.5em;
-            margin: 20px 0;
-            opacity: 0.8;
-            animation: fadeIn 2s ease-in-out;
-        }
-        .hero button {
-            padding: 15px 30px;
-            font-size: 1.2em;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            background: linear-gradient(90deg, #1abc9c, #16a085);
-            color: #000;
-            font-weight: bold;
-            transition: transform 0.3s;
-        }
-        .hero button:hover {
-            transform: scale(1.1);
-        }
-        @keyframes fadeIn {
-            0% {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
         .content {
             padding: 60px 20px;
             text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
         }
         .content h2 {
             font-size: 2.8em;
             margin-bottom: 20px;
             color: #1abc9c;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         .content p {
             font-size: 1.2em;
             line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto;
+            margin-bottom: 20px;
         }
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            padding: 40px;
-        }
-        .card {
-            background: rgba(0, 0, 0, 0.6);
+        .code-container {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 30px;
             border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-            text-align: center;
-            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            margin-top: 30px;
+            width: 90%;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
         }
-        .card h3 {
-            color: #1abc9c;
-            margin-bottom: 10px;
+        .code-container pre {
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            color: #f0f0f0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            margin: 0;
         }
         footer {
             background: rgba(0, 0, 0, 0.8);
             padding: 20px;
             text-align: center;
             color: #1abc9c;
+            margin-top: 40px;
         }
     </style>
 </head>
@@ -160,11 +118,22 @@
             </ul>
         </nav>
     </header>
-    <div class="hero" id="home">
-        <h1>Revolutionizing Fraud Detection</h1>
-        <p>Secure, Smart, and Scalable Solutions</p>
-        <button>Get Started</button>
-    </div>
+
+    <section class="content">
+        <h2>How to Use the API Request</h2>
+        <p>Each registered bank can make predictions by sending a POST request to our API. Below is an example of how to use <code>curl</code> to send a request. Replace <code>''</code> with the bank's password and adjust the feature values as needed.</p>
+
+        <div class="code-container">
+            <pre>
+curl -X POST https://fraud-detection-jv4e.onrender.com/predict \
+    -H "Content-Type: application/json" \
+    -d '{"password": "", "features": [0.186, 0.223, 0.336, 0.0, 1.0, 0.0, 1.0]}'
+            </pre>
+        </div>
+
+        <p>This <code>curl</code> command sends a JSON payload with the bank's password and feature values to the prediction endpoint. The response will include the prediction result, indicating whether the transaction is classified as fraud or not.</p>
+    </section>
+
     <footer>
         &copy; 2024 Federated Fraud Detection. All rights reserved.
     </footer>

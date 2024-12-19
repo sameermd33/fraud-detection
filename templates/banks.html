@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Federated Fraud Detection</title>
+    <title>Federated Fraud Detection - Banks</title>
     <style>
         body {
             margin: 0;
@@ -146,6 +146,10 @@
             text-align: center;
             color: #1abc9c;
         }
+        canvas {
+            max-width: 100%;
+            height: auto;
+        }
     </style>
 </head>
 <body>
@@ -160,13 +164,42 @@
             </ul>
         </nav>
     </header>
-    <div class="hero" id="home">
-        <h1>Revolutionizing Fraud Detection</h1>
-        <p>Secure, Smart, and Scalable Solutions</p>
-        <button>Get Started</button>
-    </div>
+
+    <section class="content">
+        <h2>Mechanism for Federated Learning between Banks</h2>
+        <div class="cards">
+            <div class="card">
+                <h3>Local Models for Each Bank</h3>
+                <p>Each bank (Bank1, Bank2, Bank3) has its own local model:</p>
+                <ul>
+                    <li>Bank1: Local Model1</li>
+                    <li>Bank2: Local Model2</li>
+                    <li>Bank3: Local Model3</li>
+                </ul>
+                <p>These models are trained locally within each bank's environment using their private data.</p>
+            </div>
+
+            <div class="card">
+                <h3>Accessing the Global Model</h3>
+                <p>When a bank needs to access the global model, it makes an API request using its own password for authentication.</p>
+                <ul>
+                    <li>Bank1: Password1</li>
+                    <li>Bank2: Password2</li>
+                    <li>Bank3: Password3</li>
+                </ul>
+                <p>The global model aggregates the updates from each bank's local model to improve fraud detection across all banks.</p>
+            </div>
+
+            <div class="card">
+                <h3>Data Flow and Privacy</h3>
+                <p>Each bank sends only model updates, maintaining data privacy. They do not share any sensitive data, ensuring compliance with data privacy regulations.</p>
+                <p>This federated approach ensures that the global model benefits from each bank's data while keeping the individual data secure and private.</p>
+            </div>
+        </div>
+    </section>
+
     <footer>
-        &copy; 2024 Federated Fraud Detection. All rights reserved.
+        <p>© 2024 Federated Fraud Detection. All rights reserved.</p>
     </footer>
 </body>
 </html>
