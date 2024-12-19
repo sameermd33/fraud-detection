@@ -38,7 +38,21 @@ def home():
     """
     Serve the home page for the web application.
     """
-    return render_template('home.html')
+    return render_template('home.html') 
+    
+@app.route('/overview')
+def overview():
+    return render_template('overview.html')
+
+@app.route('/banks')
+def banks():
+    return render_template('banks.html')
+
+@app.route('/service')
+def service():
+    return render_template('service.html')
+
+
 
 @app.route('/predict', methods=['POST'])
 def predict():
