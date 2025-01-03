@@ -125,9 +125,19 @@
 
         <div class="code-container">
             <pre>
-curl -X POST https://fraud-detection-jv4e.onrender.com/predict \
-    -H "Content-Type: application/json" \
-    -d '{"password": "", "features": [0.186, 0.223, 0.336, 0.0, 1.0, 0.0, 1.0]}'
+$headers = @{
+    "Content-Type" = "application/json"
+}
+
+$body = @{
+    password = "iampeer1"
+    features = @(9.242808709422700, 1.5900519365412400, 18.149100273971400, 1.0, 0.0, 0.0, 1.0)
+}
+
+Invoke-WebRequest -Uri "https://fraud-detection-jv4e.onrender.com/predict" `
+                  -Method POST `
+                  -Headers $headers `
+                  -Body ($body | ConvertTo-Json -Depth 10)
             </pre>
         </div>
 
