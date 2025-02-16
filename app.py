@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, render_template
 import numpy as np
 import joblib
+import random
 
 app = Flask(__name__)
 
@@ -15,6 +16,17 @@ peer_passwords = {
     "peer2": "iampeer2",
     "peer3": "iampeer3"
 }
+
+# List of possible fraud reasons based on dataset features
+fraud_reasons = [
+    "Transaction location is too far from home.",
+    "Transaction distance from the last transaction is unusually high.",
+    "Purchase price is much higher than the median purchase price.",
+    "Retailer is frequently repeated, which is unusual.",
+    "Card was used without a chip, increasing fraud likelihood.",
+    "Card was used without a PIN, making it vulnerable to fraud.",
+    "Transaction was made online, which has a higher risk.",
+]
 
 def verify_password(provided_password):
     """
@@ -52,8 +64,6 @@ def banks():
 def service():
     return render_template('service.html')
 
-
-
 @app.route('/predict', methods=['POST'])
 def predict():
     """
@@ -82,8 +92,12 @@ def predict():
     result = predict_fraud(model, features)
     result_str = "Fraud" if result == 1.0 else "Not Fraud"
     
-    # Return the prediction result
-    return jsonify({"prediction": result_str})
+    # If fraud is detected, add a randomly selected reason
+    response = {"prediction": result_str}
+    if result == 1.0:
+        response["reason"] = random.choice(fraud_reasons)
+
+    return jsonify(response)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=10000)
