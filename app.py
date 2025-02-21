@@ -51,7 +51,7 @@ def home():
     Serve the home page for the web application.
     """
     return render_template('home.html') 
-
+    
 @app.route('/overview')
 def overview():
     return render_template('overview.html')
@@ -63,8 +63,6 @@ def banks():
 @app.route('/service')
 def service():
     return render_template('service.html')
-
-
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -93,9 +91,7 @@ def predict():
     # Predict the fraud status using the corresponding peer's model
     result = predict_fraud(model, features)
     result_str = "Fraud" if result == 1.0 else "Not Fraud"
-
-    # Return the prediction result
-    return jsonify({"prediction": result_str})
+    
     # If fraud is detected, add a randomly selected reason
     response = {"prediction": result_str}
     if result == 1.0:
