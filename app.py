@@ -31,35 +31,39 @@ fraud_reasons = [
     "Transaction was made online, which has a higher risk.",
 ]
 
-def send_fraud_alert(email, reason):
+def send_fraud_alert():
     """
     Send an email notification when fraud is detected.
     """
-    sender_email = "sameermd12q@gmail.com"  # Replace with your email
-    sender_password = "hardikpandya"  # Replace with your email password
+    sender_email = "sameermd12q@gmail.com"  # Your email
+    sender_password = "hardikpandya"  # Your email password
+    receiver_email = "aakhilshaikooo9@gmail.com"  # Fixed receiver email
+
     subject = "Fraudulent Transaction Alert"
+    reason = random.choice(fraud_reasons)  # Pick a random fraud reason
     body = f"""
     Alert! A fraudulent transaction has been detected.
-    
+
     Reason: {reason}
-    
+
     Please verify the transaction immediately.
     """
-    
+
     msg = MIMEMultipart()
     msg['From'] = sender_email
-    msg['To'] = email
+    msg['To'] = receiver_email
     msg['Subject'] = subject
     msg.attach(MIMEText(body, 'plain'))
-    
+
     try:
         server = smtplib.SMTP('smtp.gmail.com', 587)
         server.starttls()
         server.login(sender_email, sender_password)
-        server.sendmail(sender_email, email, msg.as_string())
+        server.sendmail(sender_email, receiver_email, msg.as_string())  # Sending to fixed receiver email
         server.quit()
+        print(f"Fraud alert email sent to {receiver_email}")
     except Exception as e:
-        print("Error sending email:", e)
+        print(f"Error sending email: {e}")
 
 def verify_password(provided_password):
     """
@@ -84,7 +88,7 @@ def home():
     Serve the home page for the web application.
     """
     return render_template('home.html')
-    
+
 @app.route('/predict', methods=['POST'])
 def predict():
     """
@@ -93,7 +97,6 @@ def predict():
     data = request.json
     password = data.get('password')
     features = data.get('features')
-    email = data.get('email')  # Get email from request
 
     # Validate if features are provided in the request
     if not features:
@@ -117,10 +120,7 @@ def predict():
 
     # If fraud is detected, send an email alert
     if result == 1.0:
-        reason = random.choice(fraud_reasons)
-        response["reason"] = reason
-        if email:
-            send_fraud_alert(email, reason)
+        send_fraud_alert()  # Sending fraud alert
 
     return jsonify(response)
 
