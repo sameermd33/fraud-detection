@@ -2,6 +2,9 @@ from flask import Flask, request, jsonify, render_template
 import numpy as np
 import joblib
 import random
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 app = Flask(__name__)
 
@@ -28,6 +31,36 @@ fraud_reasons = [
     "Transaction was made online, which has a higher risk.",
 ]
 
+def send_fraud_alert(email, reason):
+    """
+    Send an email notification when fraud is detected.
+    """
+    sender_email = "sameermd12q@gmail.com"  # Replace with your email
+    sender_password = "hardikpandya"  # Replace with your email password
+    subject = "Fraudulent Transaction Alert"
+    body = f"""
+    Alert! A fraudulent transaction has been detected.
+    
+    Reason: {reason}
+    
+    Please verify the transaction immediately.
+    """
+    
+    msg = MIMEMultipart()
+    msg['From'] = sender_email
+    msg['To'] = email
+    msg['Subject'] = subject
+    msg.attach(MIMEText(body, 'plain'))
+    
+    try:
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.starttls()
+        server.login(sender_email, sender_password)
+        server.sendmail(sender_email, email, msg.as_string())
+        server.quit()
+    except Exception as e:
+        print("Error sending email:", e)
+
 def verify_password(provided_password):
     """
     Verify the password and return the corresponding peer identifier if valid.
@@ -50,20 +83,8 @@ def home():
     """
     Serve the home page for the web application.
     """
-    return render_template('home.html') 
+    return render_template('home.html')
     
-@app.route('/overview')
-def overview():
-    return render_template('overview.html')
-
-@app.route('/banks')
-def banks():
-    return render_template('banks.html')
-
-@app.route('/service')
-def service():
-    return render_template('service.html')
-
 @app.route('/predict', methods=['POST'])
 def predict():
     """
@@ -72,6 +93,7 @@ def predict():
     data = request.json
     password = data.get('password')
     features = data.get('features')
+    email = data.get('email')  # Get email from request
 
     # Validate if features are provided in the request
     if not features:
@@ -91,11 +113,14 @@ def predict():
     # Predict the fraud status using the corresponding peer's model
     result = predict_fraud(model, features)
     result_str = "Fraud" if result == 1.0 else "Not Fraud"
-    
-    # If fraud is detected, add a randomly selected reason
     response = {"prediction": result_str}
+
+    # If fraud is detected, send an email alert
     if result == 1.0:
-        response["reason"] = random.choice(fraud_reasons)
+        reason = random.choice(fraud_reasons)
+        response["reason"] = reason
+        if email:
+            send_fraud_alert(email, reason)
 
     return jsonify(response)
 
